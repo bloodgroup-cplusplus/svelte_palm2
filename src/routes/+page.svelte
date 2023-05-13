@@ -3,6 +3,8 @@
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
+import {getFirestore} from "firebase/firestore"
+import {docStore} from "sveltefire"
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -16,9 +18,20 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const db = getFirestore()
+
+const textDoc = docStore(db,"text_documents/1");
 </script>
 
 
 
 
 <h1>🏝 🦄  Palm Reader</h1>
+<h2>User Input</h2>
+<form>
+    <textarea name ="text"/>
+    <input type = "submit"/>
+</form>
+{$textDoc?.text}
+<h2>Palm2 Output</h2>
+{$textDoc?.summary}
