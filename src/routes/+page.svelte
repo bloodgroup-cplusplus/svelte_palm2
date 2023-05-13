@@ -3,7 +3,7 @@
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import {getFirestore} from "firebase/firestore"
+import {getFirestore, setDoc} from "firebase/firestore"
 import {docStore} from "sveltefire"
 
 // Your web app's Firebase configuration
@@ -21,6 +21,19 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore()
 
 const textDoc = docStore(db,"text_documents/1");
+
+
+async function handleSubmit()
+{
+    const data = new FormData()
+    await setDoc(textDoc.ref!,{
+        text:data.get("text"),
+    })
+    
+
+
+
+}
 </script>
 
 
@@ -28,7 +41,7 @@ const textDoc = docStore(db,"text_documents/1");
 
 <h1>🏝 🦄  Palm Reader</h1>
 <h2>User Input</h2>
-<form>
+<form on:submit|preventDefault={handleSubmit}>
     <textarea name ="text"/>
     <input type = "submit"/>
 </form>
